@@ -17,9 +17,15 @@ class Weapon:
     def roll_dmg(self):
         return randint(self.min_DMG, self.max_DMG)
 
+# Testing
 if __name__ == '__main__':
-    shrekFist = Weapon(100, 200, 2.0)
+    from json import load
+
+    with open('db/lionheart_executioner.json') as json_file:
+        sword = load(json_file)
+
+    shrekFist = Weapon(sword)
     print(shrekFist.getMin())
     print(shrekFist.getMax())
-    print(shrekFist.getSwingTimer())
+    print(shrekFist.get_swing_timer())
     #shrekFist.getMin()
