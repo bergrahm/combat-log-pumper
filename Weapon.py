@@ -7,12 +7,18 @@ class Weapon:
         self .max_DMG       = blueprint["max_dmg"]
         self .swing_timer   = blueprint["swing_timer"]
 
+
     def getMin(self):
         return self.min_DMG
+
+
     def getMax(self):
         return self.max_DMG
+
+
     def get_swing_timer(self):
         return self.swing_timer
+
 
     def roll_dmg(self):
         return randint(self.min_DMG, self.max_DMG)

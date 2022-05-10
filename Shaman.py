@@ -1,40 +1,50 @@
+# Shaman.py
 from random import randint
+import string
+
+
 class Shaman:
 
     def __init__(self) -> None:
         self .name              = __name__
+        self. strong            = string 
         self .weapon_name       = "fists"
         self .weapon_equipped   = None
         self .swing_timer       = 1.5
         self .crit_chance       = 23.5
         self .windfury_chance   = 20.0
+        self .crit_multiplier   = 2.0
 
-    def crit(self, dmg):
-        r =(randint(100,10000)/100)
-        if r < self.crit_chance:
-            return dmg*2
-        return dmg
+
+    def roll(self, chance): # Roll from 0.00-100 and returns if successful
+        r =(randint(100,10000)/100) 
+        return (r < chance)
+
+
+    def crit(self):
+        return self.roll(self.crit_chance)
+
+    def multiply_damage(self, dmg):
+        multiplier = 2 # placeholder for including in the parameters
+        return dmg * multiplier
+
+    def windfury(self):
+        return self.roll(self.windfury_chance)
+
 
     def equip_weapon(self, weapon):
         self .weapon_equipped   = weapon
         self .weapon_name       = weapon.name
         self .swing_timer       = weapon.get_swing_timer()
 
+
     def windfury_proc(self, dmg):
-        print(f"Windfury! {self.weapon_equipped.roll_dmg()*1.2}")
+        print(f"Windfury! {int(self.weapon_equipped.roll_dmg()*1.2)}")
 
-    def swing_weapon(self):
-        print(self .weapon_equipped.name)
-        r =(randint(100,10000)/100)
-        wf =(randint(100,10000)/100)
 
-        print(r)
-        if r < self.crit_chance:
-            print(f"Critical hit {self.weapon_equipped.roll_dmg() *2}")
-            self.windfury_proc(wf)
-        else:
-            print(self .weapon_equipped.roll_dmg())
-            self.windfury_proc(wf)
+    def auto_attack(self):
+        dmg = self.weapon_equipped.roll_dmg()
+        self.multiply_damage(dmg) if self.crit() else print(dmg)
 
 
 
@@ -50,5 +60,5 @@ if __name__ == '__main__':
 
     w = Weapon(sword)
     s.equip_weapon(w)
-    s.swing_weapon()
+    s.auto_attack()
 
